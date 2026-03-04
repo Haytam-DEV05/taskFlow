@@ -30,13 +30,19 @@ export default function Navbar() {
 
         {/* Right */}
         <div className="flex items-center gap-4">
-          <button className="text-sm text-(--text) font-medium hover:text-(--primary) transition">
+          <a
+            href="/Login"
+            className="text-sm text-(--text) font-medium hover:text-(--primary) transition"
+          >
             Log In
-          </button>
+          </a>
 
-          <button className="bg-(--primary) hover:opacity-90 transition px-4 py-2 rounded-lg text-white text-sm font-medium shadow-md">
+          <a
+            href="/Register"
+            className="bg-(--primary) hover:opacity-90 transition px-4 py-2 rounded-lg text-white text-sm font-medium shadow-md"
+          >
             Get Started
-          </button>
+          </a>
 
           <Theme />
         </div>
