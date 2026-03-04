@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+body[theme="light"] {
+    --bg: #F8FAFC;
+    /* background */
+    --card: #FFFFFF;
+    /* cards */
+    --text: #0F172A;
+    /* main text */
+    --primary: #6366F1;
+    /* buttons / links */
+}
+
+body[theme="dark"] {
+    --bg: #0F172A;
+    --card: #1E293B;
+    --text: #F1F5F9;
+    --primary: #818CF8;
+}
