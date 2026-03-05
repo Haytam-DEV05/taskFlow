@@ -11,7 +11,7 @@ export default function Navbar() {
             <BiTask size={26} />
           </span>
           <h1 className="text-xl font-bold tracking-tight text-(--text)">
-            TaskFlow
+            <a href="/">TaskFlow</a>
           </h1>
         </div>
 

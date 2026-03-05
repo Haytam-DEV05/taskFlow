@@ -60,7 +60,7 @@ export default function Login() {
           </button>
 
           <p className="text-center text-sm text-(--text)/60 mt-6">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <a
               href="/Register"
               className="text-(--primary) hover:underline"

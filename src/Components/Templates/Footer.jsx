@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-(--card) border-t border-(--text)/10 pt-20">
       {/* Top CTA Section */}
-      <div className="max-w-6xl mx-auto px-6 text-center">
+      <div className="max-w-6xl mx-auto px-6 text-center pb-10">
         <HeaderTop
           title="Ready to boost your productivity?"
           description="Join thousands of teams already managing their workflow smarter and faster."

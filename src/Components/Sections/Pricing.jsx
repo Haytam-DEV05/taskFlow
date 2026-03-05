@@ -59,6 +59,7 @@ export default function Pricing() {
       <div className="mt-20 grid gap-10 md:grid-cols-3 max-w-6xl mx-auto">
         {info.map((ele) => (
           <div
+            data-aos="zoom-in-down"
             key={ele.id}
             className={`relative p-8 rounded-3xl border transition-all duration-300
               ${
@@ -83,9 +84,7 @@ export default function Pricing() {
               <span className="text-4xl font-bold text-(--text)">
                 {ele.price}
               </span>
-              <span className="text-(--text)/60 text-sm">
-                {ele.time}
-              </span>
+              <span className="text-(--text)/60 text-sm">{ele.time}</span>
             </div>
 
             <button

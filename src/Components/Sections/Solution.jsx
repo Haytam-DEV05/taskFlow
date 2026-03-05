@@ -42,6 +42,7 @@ export default function Solution() {
         {Solutions.map((ele) => (
           <div
             key={ele.id}
+            data-aos="zoom-in"
             className="group p-8 bg-(--card) border border-(--text)/10 rounded-2xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
           >
             <div className="w-12 h-12 flex items-center justify-center bg-(--primary)/10 text-(--primary) rounded-xl mb-6 group-hover:scale-110 transition">

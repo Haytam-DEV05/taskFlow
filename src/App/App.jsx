@@ -6,7 +6,7 @@ const App = () => {
     if (window.AOS) {
       window.AOS.init({
         duration: 1000,
-        once: true,
+        once: false,
       });
 
       window.AOS.refresh();
