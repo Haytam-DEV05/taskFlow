@@ -13,7 +13,7 @@ export default function Login() {
     password: "",
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = formInputs;
     if (!email.trim() || !password.trim()) {
@@ -27,7 +27,8 @@ export default function Login() {
     try {
       setLoading(true);
 
-      const { error, data } = SignIn(email, password);
+      const { error, data } = await SignIn(email, password);
+      
       if (error) {
         setError(error.message);
         return;
@@ -111,7 +112,7 @@ export default function Login() {
             disabled={loading}
             className="w-full bg-(--primary) hover:opacity-90 transition py-3 rounded-xl text-white font-medium shadow-lg"
           >
-            Sign In TaskFlow →
+            {loading ? "SignIn .." : "Sign In TaskFlow →"}
           </button>
 
           <p className="text-center text-sm text-(--text)/60 mt-6">

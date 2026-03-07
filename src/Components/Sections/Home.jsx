@@ -18,7 +18,7 @@ export default function Home() {
           Get Started Free
         </button>
 
-        <button className="border border-(--text)/20 hover:border-(--primary) transition px-6 py-3 rounded-xl font-medium">
+        <button className="border text-(--text) border-(--text)/20 hover:border-(--primary) transition px-6 py-3 rounded-xl font-medium">
           Learn More
         </button>
       </div>
