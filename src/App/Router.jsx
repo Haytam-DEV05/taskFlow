@@ -7,6 +7,7 @@ import Navbar from "../Components/Templates/Navbar";
 import Footer from "../Components/Templates/Footer";
 import DashboardLayout from "../Pages/Dashboard/DashboardLayout";
 import DashboardProjects from "../Pages/Dashboard/DashboardProjects";
+import CreateProjects from "../Pages/Projects/CreateProjects";
 // ====================================
 
 const Layout = () => {
@@ -43,7 +44,10 @@ const Linkes = createBrowserRouter([
   {
     path: "/dashboard",
     element: <DashboardLayout />,
-    children: [{ path: "/dashboard/projects", element: <DashboardProjects /> }],
+    children: [
+      { path: "/dashboard/projects", element: <DashboardProjects /> },
+      { path: "/dashboard/createProject", element: <CreateProjects /> },
+    ],
   },
 ]);
 
