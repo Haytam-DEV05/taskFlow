@@ -1,10 +1,25 @@
-import { createContext } from "react";
+import { createContext, useEffect, useState } from "react";
 import supabase from "../util/supabase";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  // CHECK THE USER =>
+  useEffect(() => {
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (event, session) => {
+        setUser(session?.user || null);
+      },
+    );
+
+    return () => {
+      listener.subscription.unsubscribe();
+    };
+  }, []);
+
   // SIGNUP WITH SUPABASE =>
   const SignUp = async (email, password, metaData) => {
     const { error, data } = await supabase.auth.signUp({
@@ -34,10 +49,11 @@ export const UserProvider = ({ children }) => {
   // SIGNOUT WITH SUPABASE =>
   const SignOut = async () => {
     await supabase.auth.signOut();
+    setUser(null);
   };
 
   return (
-    <UserContext.Provider value={{ SignUp, SignIn, SignOut }}>
+    <UserContext.Provider value={{ SignUp, SignIn, SignOut, user }}>
       {children}
     </UserContext.Provider>
   );

@@ -5,20 +5,18 @@ import Login from "../Pages/Auth/Login";
 import Register from "../Pages/Auth/Register";
 import Navbar from "../Components/Templates/Navbar";
 import Footer from "../Components/Templates/Footer";
+import DashboardLayout from "../Pages/Dashboard/DashboardLayout";
+import DashboardProjects from "../Pages/Dashboard/DashboardProjects";
 // ====================================
 
 const Layout = () => {
   return (
     <>
-      <>
-        <Navbar />
-      </>
+      <Navbar />
       <>
         <Outlet />
       </>
-      <>
-        <Footer />
-      </>
+      <Footer />
     </>
   );
 };
@@ -41,6 +39,11 @@ const Linkes = createBrowserRouter([
         element: <Register />,
       },
     ],
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
+    children: [{ path: "/dashboard/projects", element: <DashboardProjects /> }],
   },
 ]);
 

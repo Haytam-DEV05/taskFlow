@@ -4,7 +4,9 @@ import { useState } from "react";
 
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
+import { useNavigate } from "react-router";
 export default function Login() {
+  const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { SignIn } = useContext(UserContext);
@@ -28,7 +30,7 @@ export default function Login() {
       setLoading(true);
 
       const { error, data } = await SignIn(email, password);
-      
+
       if (error) {
         setError(error.message);
         return;
@@ -36,6 +38,9 @@ export default function Login() {
 
       if (data) {
         console.log(data);
+        console.log(data.user);
+        console.log(data.user.user_metadata);
+        navigate("/dashboard/projects");
       }
     } catch (error) {
       setError(error.message);

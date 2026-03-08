@@ -5,8 +5,10 @@ import { useState } from "react";
 
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
+import { useNavigate } from "react-router";
 
 export default function Register() {
+  const navigate = useNavigate();
   const { SignUp } = useContext(UserContext);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -37,7 +39,7 @@ export default function Register() {
         return;
       }
       if (data) {
-        console.log(data);
+        navigate("/Login");
       }
     } catch (error) {
       setError(error);
