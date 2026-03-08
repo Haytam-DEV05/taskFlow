@@ -51,6 +51,10 @@ export default function DashboardProjects() {
     navigate(`/dashboard/updateProjects/${id}`);
   };
 
+  const handleBtnProject = (id) => {
+    navigate(`/dashboard/projects/${id}/tasks`);
+  };
+
   return (
     <div>
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
@@ -79,6 +83,7 @@ export default function DashboardProjects() {
         {projects.map((p, index) => {
           return (
             <div
+              onClick={() => handleBtnProject(p.id)}
               key={index}
               className="group bg-[#1E293B] border border-slate-700/40 p-6 rounded-2xl hover:border-[#818CF8]/50 transition-all duration-300 shadow-xl hover:shadow-[#818CF8]/5 shadow-transparent flex flex-col justify-between relative overflow-hidden"
             >
