@@ -8,6 +8,7 @@ import Footer from "../Components/Templates/Footer";
 import DashboardLayout from "../Pages/Dashboard/DashboardLayout";
 import DashboardProjects from "../Pages/Dashboard/DashboardProjects";
 import CreateProjects from "../Pages/Projects/CreateProjects";
+import UpdateProjects from "../Pages/Projects/UpdateProjects";
 // ====================================
 
 const Layout = () => {
@@ -47,6 +48,7 @@ const Linkes = createBrowserRouter([
     children: [
       { path: "/dashboard/projects", element: <DashboardProjects /> },
       { path: "/dashboard/createProject", element: <CreateProjects /> },
+      { path: "/dashboard/updateProjects/:id", element: <UpdateProjects /> },
     ],
   },
 ]);

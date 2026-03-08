@@ -47,6 +47,10 @@ export default function DashboardProjects() {
     }
   };
 
+  const handleBtnUpdate = (id) => {
+    navigate(`/dashboard/updateProjects/${id}`);
+  };
+
   return (
     <div>
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
@@ -103,7 +107,10 @@ export default function DashboardProjects() {
               </div>
 
               <div className="flex items-center gap-3 mt-auto pt-5 border-t border-slate-700/50">
-                <button className="flex-1 flex items-center justify-center gap-2 bg-[#818CF8]/10 hover:bg-[#818CF8] text-[#818CF8] hover:text-white py-2.5 rounded-xl text-sm font-bold transition-all duration-300 border border-[#818CF8]/20 group/btn">
+                <button
+                  onClick={() => handleBtnUpdate(p.id)}
+                  className="flex-1 flex items-center justify-center gap-2 bg-[#818CF8]/10 hover:bg-[#818CF8] text-[#818CF8] hover:text-white py-2.5 rounded-xl text-sm font-bold transition-all duration-300 border border-[#818CF8]/20 group/btn"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 group-hover/btn:rotate-12 transition-transform"
