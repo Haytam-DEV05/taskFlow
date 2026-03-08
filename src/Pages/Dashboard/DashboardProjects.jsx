@@ -30,7 +30,6 @@ export default function DashboardProjects() {
       }
       if (data) {
         setProjects(data);
-        console.log("data projects", data);
       }
     };
     getProfile();
@@ -40,6 +39,14 @@ export default function DashboardProjects() {
     e.preventDefault();
     navigate("/dashboard/createProject");
   };
+
+  const handleBtnDelete = async (id) => {
+    if (confirm("are you sure, You Want To delete This Project ?")) {
+      await supabase.from("projects").delete().eq("id", id);
+      setProjects(projects.filter((ele) => ele.id !== id));
+    }
+  };
+
   return (
     <div>
       <header className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
@@ -115,6 +122,7 @@ export default function DashboardProjects() {
                 </button>
 
                 <button
+                  onClick={() => handleBtnDelete(p.id)}
                   className="px-4 py-2.5 rounded-xl text-slate-400 hover:text-red-400 hover:bg-red-500/10 border border-transparent hover:border-red-500/20 transition-all duration-300"
                   title="Delete Project"
                 >
