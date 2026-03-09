@@ -12,7 +12,6 @@ export const UserProvider = ({ children }) => {
     const { data: listener } = supabase.auth.onAuthStateChange(
       (event, session) => {
         setUser(session?.user || null);
-        console.log(session?.user);
       },
     );
 

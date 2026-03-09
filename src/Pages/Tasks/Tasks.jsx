@@ -18,7 +18,6 @@ export default function Tasks() {
         console.log(error.message);
       }
       if (data) {
-        console.log("data", data);
         setProject(data);
       }
     };
@@ -33,7 +32,6 @@ export default function Tasks() {
       }
 
       if (data) {
-        console.log(data);
         setTasks(data);
       }
     };
@@ -46,11 +44,19 @@ export default function Tasks() {
     navigate(`/dashboard/projects/${id}/createTask`);
   };
 
-  
+  const handleDelete = async (id) => {
+    if (confirm("Are You Sure, You  Want To Delete This Task ?")) {
+      await supabase.from("tasks").delete().eq("id", id);
+      setTasks(tasks.filter((task) => task.id !== id));
+    }
+  };
+
+  const handleBtnUpdate = async (idTask) => {
+    navigate(`/dashboard/projects/${id}/updateTask/${idTask}`);
+  };
 
   return (
     <div className="p-8">
-      {/* PROJECT HEADER */}
       <header className="mb-10 border-b border-slate-700 pb-8">
         <h2 className="text-4xl font-extrabold text-[#F1F5F9]">
           {project.name}
@@ -58,7 +64,6 @@ export default function Tasks() {
         <p className="text-slate-400 mt-2 max-w-2xl">{project.description}</p>
       </header>
 
-      {/* SECTION TITLE & ACTION */}
       <div className="flex justify-between items-center mb-6">
         <h3 className="text-2xl font-bold text-[#F1F5F9]">Tasks</h3>
         <button
@@ -69,7 +74,6 @@ export default function Tasks() {
         </button>
       </div>
 
-      {/* TASKS LIST */}
       <div className="grid gap-4">
         {tasks.map((task) => (
           <div
@@ -83,7 +87,6 @@ export default function Tasks() {
               <p className="text-sm text-slate-400">{task.description}</p>
             </div>
 
-            {/* STATUS BADGE LOGIC */}
             <span
               className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border transition-all ${
                 task.status === "done"
@@ -96,12 +99,17 @@ export default function Tasks() {
               {task.status}
             </span>
 
-            {/* ACTIONS */}
             <div className="flex gap-2">
-              <button className="text-sm text-slate-400 hover:text-[#818CF8] px-3 py-2 transition-colors">
+              <button
+                onClick={() => handleBtnUpdate(task.id)}
+                className="text-sm text-slate-400 hover:text-[#818CF8] px-3 py-2 transition-colors cursor-pointer"
+              >
                 Update
               </button>
-              <button className="text-sm text-slate-400 hover:text-red-400 px-3 py-2 transition-colors">
+              <button
+                onClick={() => handleDelete(task.id)}
+                className="text-sm text-slate-400 hover:text-red-400 px-3 py-2 transition-colors cursor-pointer"
+              >
                 Delete
               </button>
             </div>
