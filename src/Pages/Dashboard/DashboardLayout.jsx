@@ -1,4 +1,4 @@
-import { Outlet, useNavigate,NavLink } from "react-router";
+import { Outlet, useNavigate, NavLink } from "react-router";
 import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
 
@@ -12,7 +12,7 @@ export default function DashboardLayout() {
     {
       id: 2,
       nameItem: "Setting",
-      to: "/dashboard/projects",
+      to: "/dashboard/settings",
     },
   ];
   const { user, SignOut } = useContext(UserContext);

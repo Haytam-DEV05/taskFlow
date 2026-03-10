@@ -12,6 +12,7 @@ import UpdateProjects from "../Pages/Projects/UpdateProjects";
 import Tasks from "../Pages/Tasks/Tasks";
 import CreateTask from "../Pages/Tasks/CreateTask";
 import UpdateTask from "../Pages/Tasks/UpdateTask";
+import DashboardSettings from "../Pages/Dashboard/DashboardSettings";
 // ====================================
 
 const Layout = () => {
@@ -58,6 +59,7 @@ const Linkes = createBrowserRouter([
         path: "/dashboard/projects/:idProject/updateTask/:idTask",
         element: <UpdateTask />,
       },
+      { path: "/dashboard/settings", element: <DashboardSettings /> },
     ],
   },
 ]);

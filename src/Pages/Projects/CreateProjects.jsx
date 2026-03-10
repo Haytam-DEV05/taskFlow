@@ -41,7 +41,6 @@ export default function CreateProjects() {
 
   return (
     <div className="max-w-2xl mx-auto mt-10">
-      {/* FORM CONTAINER: Using --card (#1E293B) */}
       <form
         onSubmit={handleSubmit}
         className="bg-[#1E293B] border border-slate-700/50 p-8 rounded-2xl shadow-2xl"
@@ -52,7 +51,6 @@ export default function CreateProjects() {
         </h1>
 
         <div className="space-y-6">
-          {/* TITLE INPUT */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-slate-400 ml-1">
               Project Title
@@ -69,7 +67,6 @@ export default function CreateProjects() {
             />
           </div>
 
-          {/* DESCRIPTION TEXTAREA */}
           <div className="flex flex-col gap-2">
             <label className="text-sm font-medium text-slate-400 ml-1">
               Description
@@ -92,14 +89,12 @@ export default function CreateProjects() {
             </div>
           )}
 
-          {/* SUBMIT BUTTON: Using --primary (#818CF8) */}
           <button className="w-full bg-[#818CF8] hover:bg-[#717cf0] text-white font-bold py-4 rounded-xl shadow-lg shadow-indigo-500/20 transition-all active:scale-[0.98] mt-4">
             Create Project
           </button>
         </div>
       </form>
 
-      {/* SUBTLE TIP */}
       <p className="text-center text-slate-500 text-sm mt-6">
         Press <kbd className="bg-slate-800 px-2 py-1 rounded">Cmd + Enter</kbd>{" "}
         to save quickly.
