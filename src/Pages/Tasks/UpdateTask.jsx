@@ -1,29 +1,30 @@
 import { useNavigate, useParams } from "react-router";
 import { useEffect, useState } from "react";
-import supabase from "../../util/supabase";
+import { useTasks } from "../../Context/TasksContext";
+
 export default function UpdateTask() {
-  const { idTask, idProject } = useParams();
-  const navigate = useNavigate();
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [formInputs, setFormInputs] = useState({
     title: "",
     description: "",
     status: "",
   });
+  const { updateTask, getTask } = useTasks();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  const { idTask, idProject } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const getTask = async () => {
-      const { data, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .eq("id", idTask)
-        .single();
+    const fetchTask = async () => {
+      const { data, error } = await getTask(idTask);
+      // console.log("error from updatetask", error);
+      
       if (error) {
         setError(error.message);
         return;
       }
       if (data) {
+        console.log("data from updatetask", data);
         setFormInputs({
           title: data.title,
           description: data.description,
@@ -31,7 +32,8 @@ export default function UpdateTask() {
         });
       }
     };
-    getTask();
+    fetchTask();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [idTask]);
 
   const handleSubmit = async (e) => {
@@ -43,14 +45,7 @@ export default function UpdateTask() {
 
     try {
       setLoading(true);
-      const { error } = await supabase
-        .from("tasks")
-        .update({
-          title: title,
-          description: description,
-          status: status || "todo",
-        })
-        .eq("id", idTask);
+      const { error } = updateTask(title, description, status, idTask);
       if (error) {
         setError(error.message);
         return;

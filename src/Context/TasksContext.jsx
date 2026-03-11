@@ -28,6 +28,15 @@ export const TasksProvider = ({ children }) => {
     }
   };
 
+  const getTask = async (idTask) => {
+    const { data, error } = await supabase
+      .from("tasks")
+      .select("*")
+      .eq("id", idTask)
+      .single();
+    return { data, error };
+  };
+
   const deleteTask = async (id) => {
     await supabase.from("tasks").delete().eq("id", id);
     setTasks(tasks.filter((task) => task.id !== id));
@@ -44,13 +53,32 @@ export const TasksProvider = ({ children }) => {
     return { error };
   };
 
+  const updateTask = async (title, description, status, idTask) => {
+    const { error } = await supabase
+      .from("tasks")
+      .update({
+        title: title,
+        description: description,
+        status: status || "todo",
+      })
+      .eq("id", idTask);
+    return { error };
+  };
+
   useEffect(() => {
     getTasks();
   }, [idProject]);
 
   return (
     <TasksContext.Provider
-      value={{ tasks, getIdProject, deleteTask, createTask }}
+      value={{
+        tasks,
+        getIdProject,
+        deleteTask,
+        createTask,
+        updateTask,
+        getTask,
+      }}
     >
       {children}
     </TasksContext.Provider>
