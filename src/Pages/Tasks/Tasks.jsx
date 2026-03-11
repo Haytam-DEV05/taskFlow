@@ -1,42 +1,26 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import supabase from "../../util/supabase";
+import { useProject } from "../../Context/ProjectContext";
+import { useTasks } from "../../Context/TasksContext";
 
 export default function Tasks() {
+  const { tasks, deleteTask, getIdProject } = useTasks();
+  const { getProject } = useProject();
   const { id } = useParams();
-  const navigate = useNavigate();
   const [project, setProject] = useState([]);
-  const [tasks, setTasks] = useState([]);
+
+  const navigate = useNavigate();
   useEffect(() => {
-    const getProject = async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("id", id)
-        .single();
-      if (error) {
-        console.log(error.message);
-      }
+    const fetchProject = async () => {
+      const { data } = await getProject(id);
       if (data) {
         setProject(data);
       }
     };
-    const getTasks = async () => {
-      const { data, error } = await supabase
-        .from("tasks")
-        .select("*")
-        .eq("project_id", id);
 
-      if (error) {
-        console.log(error);
-      }
-
-      if (data) {
-        setTasks(data);
-      }
-    };
-    getProject();
-    getTasks();
+    fetchProject();
+    getIdProject(id);
   }, [id]);
 
   const handleCreateTask = (e) => {
@@ -46,8 +30,7 @@ export default function Tasks() {
 
   const handleDelete = async (id) => {
     if (confirm("Are You Sure, You  Want To Delete This Task ?")) {
-      await supabase.from("tasks").delete().eq("id", id);
-      setTasks(tasks.filter((task) => task.id !== id));
+      deleteTask(id);
     }
   };
 

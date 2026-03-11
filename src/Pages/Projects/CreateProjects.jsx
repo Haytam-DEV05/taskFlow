@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import supabase from "../../util/supabase";
 import { UserContext } from "../../Context/UserContext";
 import { useContext } from "react";
 import { useNavigate } from "react-router";
+import { useProject } from "../../Context/ProjectContext";
 
 export default function CreateProjects() {
+  const { createProject } = useProject();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const { user } = useContext(UserContext);
@@ -27,11 +28,7 @@ export default function CreateProjects() {
       setError("Pleas Fill All Field");
       return;
     }
-    const { error } = await supabase.from("projects").insert({
-      name: title,
-      description: description,
-      user_id: user.id,
-    });
+    const { error } = createProject(title, description, user.id);
     if (error) {
       setError(error.message);
     } else {

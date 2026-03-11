@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate, useParams } from "react-router";
-import supabase from "../../util/supabase";
+import { useTasks } from "../../Context/TasksContext";
 
 export default function CreateTask() {
+  const { createTask } = useTasks();
   const { id } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -14,7 +15,7 @@ export default function CreateTask() {
     status: "",
   });
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const { title, description, status } = formInputs;
     if (!title.trim() || !description.trim()) {
@@ -23,12 +24,7 @@ export default function CreateTask() {
     }
     try {
       setLoading(true);
-      const { error } = await supabase.from("tasks").insert({
-        title: title,
-        description: description,
-        status: status.trim() || "todo",
-        project_id: id,
-      });
+      const { error } = createTask(title, description, status, id);
       if (error) {
         setError(error.message);
         setLoading(false);

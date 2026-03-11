@@ -4,36 +4,55 @@ import { useContext } from "react";
 import { UserContext } from "../../Context/UserContext";
 import { useNavigate } from "react-router";
 
+import { GrProjects } from "react-icons/gr";
+import { LuListTodo } from "react-icons/lu";
+import { GrInProgress } from "react-icons/gr";
+import { MdOutlineDownloadDone } from "react-icons/md";
+import { useProject } from "../../Context/ProjectContext";
+
 export default function DashboardProjects() {
+  const { projects, deleteProject } = useProject();
+  const boxesInfo = [
+    {
+      id: 1,
+      title: "Projects",
+      icon: <GrProjects size={25} />,
+      info: projects.length,
+    },
+    {
+      id: 2,
+      title: "Todo",
+      icon: <LuListTodo size={25} />,
+      info: 2,
+    },
+    {
+      id: 3,
+      title: "InProgresse",
+      icon: <GrInProgress size={25} />,
+      info: 1,
+    },
+    {
+      id: 4,
+      title: "Done",
+      icon: <MdOutlineDownloadDone size={25} />,
+      info: 1,
+    },
+  ];
   const navigate = useNavigate();
   const { user } = useContext(UserContext);
   const [profile, setProfile] = useState(null);
-  const [projects, setProjects] = useState([]);
   useEffect(() => {
     const getProfile = async () => {
       const { data } = await supabase
         .from("profiles")
         .select()
-        .eq("id", user.id)
+        .eq("id", user?.id)
         .single();
       if (data) {
         setProfile(data);
       }
     };
-    const getProjects = async () => {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("user_id", user.id);
-      if (error) {
-        console.log(error.message);
-      }
-      if (data) {
-        setProjects(data);
-      }
-    };
     getProfile();
-    getProjects();
   }, [user]);
   const handleCreateProject = (e) => {
     e.preventDefault();
@@ -42,8 +61,7 @@ export default function DashboardProjects() {
 
   const handleBtnDelete = async (id) => {
     if (confirm("are you sure, You Want To delete This Project ?")) {
-      await supabase.from("projects").delete().eq("id", id);
-      setProjects(projects.filter((ele) => ele.id !== id));
+      deleteProject(id);
     }
   };
 
@@ -79,17 +97,47 @@ export default function DashboardProjects() {
         </button>
       </header>
 
+      <div className="boxes grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {boxesInfo.map((box) => {
+          return (
+            <div
+              className="group bg-[#1E293B] border border-slate-700/40 p-6 rounded-2xl hover:border-[#818CF8]/50 transition-all duration-300 shadow-xl hover:shadow-[#818CF8]/5 shadow-transparent flex flex-col justify-between relative overflow-hidden"
+              key={box.id}
+            >
+              <h2 className="mb-3">{box.title}</h2>
+              <div className="info flex justify-between items-center">
+                <span
+                  className={`p-2 rounded-md ${
+                    box.title === "Projects"
+                      ? "bg-blue-500"
+                      : box.title === "Todo"
+                        ? "bg-red-400"
+                        : box.title === "InProgresse"
+                          ? "bg-amber-400"
+                          : "bg-green-400"
+                  }`}
+                >
+                  {box.icon}
+                </span>
+                <p className="text-xl font-bold text-[#F1F5F9] mb-2 group-hover:text-[#818CF8] transition-colors line-clamp-1">
+                  {box.info}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
         {projects.map((p, index) => {
           return (
             <div
-              onClick={() => handleBtnProject(p.id)}
               key={index}
               className="group bg-[#1E293B] border border-slate-700/40 p-6 rounded-2xl hover:border-[#818CF8]/50 transition-all duration-300 shadow-xl hover:shadow-[#818CF8]/5 shadow-transparent flex flex-col justify-between relative overflow-hidden"
             >
               <div className="absolute top-0 left-0 w-full h-1 bg-[#818CF8] opacity-0 group-hover:opacity-100 transition-opacity"></div>
 
-              <div>
+              <div onClick={() => handleBtnProject(p.id)}>
                 <div className="flex justify-between items-start mb-4">
                   <div className="h-10 w-10 bg-[#0F172A] rounded-lg flex items-center justify-center border border-slate-700 group-hover:border-[#818CF8]/30 transition-colors">
                     <span className="text-[#818CF8] font-bold">

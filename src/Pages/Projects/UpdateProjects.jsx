@@ -1,34 +1,37 @@
 import { useEffect, useState } from "react";
-import supabase from "../../util/supabase";
 import { useParams, useNavigate } from "react-router";
+import { useProject } from "../../Context/ProjectContext";
 
 export default function UpdateProjects() {
+  const { updateProject, getProject } = useProject();
   const { id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(true);
+
   const [projects, setProjects] = useState({
     title: "",
     description: "",
   });
 
   useEffect(() => {
-    const getProject = async () => {
-      const { data } = await supabase
-        .from("projects")
-        .select("*")
-        .eq("id", id)
-        .single();
-
-      if (data) {
-        setProjects({
-          title: data.name,
-          description: data.description,
-        });
+    const fetchProject = async () => {
+      try {
+        const { data } = await getProject(id);
+        if (data) {
+          setProjects({
+            title: data.name,
+            description: data.description,
+          });
+          setLoading(false);
+        }
+      } catch (err) {
+        console.log(err);
       }
-      setLoading(false);
     };
-    getProject();
+
+    fetchProject();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const handleUpdate = async (e) => {
@@ -40,22 +43,16 @@ export default function UpdateProjects() {
     }
 
     try {
-      const { error } = await supabase
-        .from("projects")
-        .update({
-          name: title,
-          description: description,
-        })
-        .eq("id", id);
+      const { error } = updateProject(title, description, id);
 
       if (error) {
         setError(error.message);
         return;
       }
-
       navigate("/dashboard/projects");
     } catch (err) {
-      setError(err.message);
+      console.log(err);
+      setError("something wrong");
     }
   };
 
